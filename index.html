@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- 预加载兜底海报，提升微信打开加载速度 -->
+<link rel="preload" href="http://cccimg.com/view.php/072d6566eb605bb0ac92528feeac4b1c.jpg" as="image">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:13.3333vw;}
+body{
+    background:#ffffff;
+    font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.page-header-box{
+    position:relative;
+    overflow:hidden;
+    padding-top:calc(100% / 16 * 9);
+    background:#000000;
+}
+.page-header-video{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;
+}
+.header-fallback{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+}
+.page-header-overlay{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index:2;
+}
+.page-header-text-wrap{
+    position:absolute;
+    width:100%;
+    top:0.2rem;
+    z-index:3;
+}
+.page-main-title{
+    background:transparent;
+    text-align:center;
+    font-size:0.44rem;
+    font-weight:500;
+    padding:0.1rem 0;
+    color:#ffffff;
+    text-shadow:0 0 10px rgba(0,0,0,0.8);
+}
+.top-music-wrap{
+    padding:0 0.8rem;
+}
+.top-music-btn{
+    width:100%;
+    padding:0.2rem;
+    background:rgba(255,255,255,0.15);
+    color:#fff;
+    border:none;
+    border-radius:0.2rem;
+    font-size:0.32rem;
+}
+.banner-container{
+    width:100%;
+    position:relative;
+    padding-top:45.6%;
+    overflow:hidden;
+    margin-top:0.4rem;
+}
+.banner-container img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.section-wrap{
+    display:flex;
+    align-items:center;
+    background:#eeeeee;
+    margin-top:0.4rem;
+}
+.section-left-empty{
+    width:0.4rem;
+    background:#ffffff;
+    height:0.8rem;
+}
+.red-stripe{
+    width:0.12rem;
+    height:0.8rem;
+    background:#e51e25;
+}
+.section-title{
+    font-size:0.4rem;
+    padding:0 0.32rem;
+    line-height:0.8rem;
+    color:#222222;
+}
+.text-block{
+    padding:0.32rem 0.8rem;
+    font-size:0.34rem;
+    line-height:1.82;
+    color:#111111;
+}
+.jump-btn-wrap{
+    padding:0.4rem 0.8rem 0.2rem;
+}
+.jump-button{
+    width:100%;
+    padding:0.32rem;
+    background:#e51e25;
+    color:#fff;
+    border:none;
+    border-radius:0.2rem;
+    font-size:0.38rem;
+}
+.jump-button:active{
+    background:#c41820;
+}
+audio{
+    display:none;
+}
+</style>
+<title>石昊电竞打手入驻</title>
+</head>
+<body>
+<script>
+const pageConfig = {
+    bannerImg:"https://pan.29o.cn/view.php/9e1b434bd23556765cd1e7194e71c1a6.png",
+    noticeContent:`打完不给结单？单价黑？提现到账慢？
+我们石昊电竞不存在这些问题，只要你打完了都是秒结单，单价虽然没有大俱乐部那么高但也不会很低，提现全天24小时开放手续费只有3%，只要你有实力包吃饱，不玩任何虚的，最后欢迎大家入住！
+招募大量有能力的商家管事`,
+    ruleContent:`1.机密护单人4杀，绝密护单人6杀
+2.石昊电竞押金50`,
+    jumpUrl:"https://qun.qq.com/universal-share/share?ac=1&authKey=ms4pnPs9SoYtEgzxSX7MFu7H%2BLx%2FNnikfQ81RqMjfizcf2Xn8UpEX8uisFXUZOKZ&busi_data=eyJncm91cENvZGUiOiIyNDExNjI0ODkiLCJ0b2tlbiI6InByVWt2Z3VhbjlPdzlWMXZZdTlEUGJXbldCcmFqYWxEbzZnYmI4WmpPK3BadmVoTWM4ai9wWHYyZWZXdWNveWwiLCJ1aW4iOiIzOTA2NzUxNjcxIn0%3D&data=cT6l_HcOK_K3axPR39tEjtdFnDaNaSCTAiuXo-gSaURNgyZsmpcAnJHwpfzqwFfJK7Yj9xu_dOG11uZ177xJhg&svctype=4&tempid=h5_group_info",
+    btnText:"点击加入考核群",
+    audioUrl:"https://pan.29o.cn/view.php/aa9bc85e6edd6e0abe40888ecee6216a.mp3",
+    videoUrl:"http://cccimg.com/view.php/8de6cfba855939b0b024737bf3805e40.mp4",
+    headerFallbackImg:"http://cccimg.com/view.php/072d6566eb605bb0ac92528feeac4b1c.jpg"
+}
+</script>
+
+<div class="page-header-box">
+    <img class="header-fallback" id="headerFallback">
+    <video id="mainVideo" class="page-header-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" preload="none">
+        <source id="videoSrc" type="video/mp4">
+    </video>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-text-wrap">
+        <div class="page-main-title">石昊电竞打手入驻</div>
+        <div class="top-music-wrap">
+            <button class="top-music-btn" id="musicCtrlBtn">🎵 点击开启背景音乐</button>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap">
+    <div class="section-left-empty"></div>
+    <div class="red-stripe"></div>
+    <div class="section-title">公告</div>
+</div>
+<div class="text-block" id="noticeBox"></div>
+
+<div class="section-wrap">
+    <div class="section-left-empty"></div>
+    <div class="red-stripe"></div>
+    <div class="section-title">考核要求</div>
+</div>
+<div class="text-block" id="ruleBox"></div>
+
+<div class="section-wrap">
+    <div class="section-left-empty"></div>
+    <div class="red-stripe"></div>
+    <div class="section-title">考核群</div>
+</div>
+
+<div class="banner-container">
+    <img id="bannerPic">
+</div>
+
+<div class="jump-btn-wrap">
+    <button class="jump-button" id="linkBtn"></button>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+
+<script>
+const bannerPic = document.getElementById("bannerPic");
+const noticeBox = document.getElementById("noticeBox");
+const ruleBox = document.getElementById("ruleBox");
+const videoSrc = document.getElementById("videoSrc");
+const pageVideo = document.getElementById("mainVideo");
+const headerFallback = document.getElementById("headerFallback");
+const linkBtn = document.getElementById("linkBtn");
+const audioDom = document.getElementById("bgMusic");
+
+bannerPic.src = pageConfig.bannerImg;
+noticeBox.innerText = pageConfig.noticeContent;
+ruleBox.innerText = pageConfig.ruleContent;
+videoSrc.src = pageConfig.videoUrl;
+headerFallback.src = pageConfig.headerFallbackImg;
+linkBtn.innerText = pageConfig.btnText;
+audioDom.src = pageConfig.audioUrl;
+
+let musicPlay = false;
+
+function tryPlay(){
+    pageVideo.load();
+    pageVideo.play().catch(()=>{
+        pageVideo.style.display = "none";
+    })
+}
+if(window.WeixinJSBridge){
+    WeixinJSBridge.invoke('getNetworkType',{},tryPlay);
+}else{
+    document.addEventListener("WeixinJSBridgeReady", tryPlay, false);
+}
+
+pageVideo.addEventListener('ended',()=>{
+    pageVideo.currentTime = 0;
+    pageVideo.play();
+})
+
+pageVideo.addEventListener('error', () => {
+    pageVideo.style.display = "none";
+})
+
+// 缩短超时到1.8秒，更快切到静态海报，提升微信体验
+setTimeout(()=>{
+    if(pageVideo.readyState < 2){
+        pageVideo.style.display = "none";
+    }
+},1800)
+
+document.body.addEventListener('touchstart', tryPlay, {once:true})
+
+linkBtn.onclick = function(){
+    window.location.href = pageConfig.jumpUrl;
+};
+document.getElementById("musicCtrlBtn").onclick = function(){
+    if(!musicPlay){
+        audioDom.play();
+        this.innerText = "🔇 关闭背景音乐";
+        musicPlay = true;
+    }else{
+        audioDom.pause();
+        this.innerText = "🎵 点击开启背景音乐";
+        musicPlay = false;
+    }
+}
+</script>
+</body>
+</html>
